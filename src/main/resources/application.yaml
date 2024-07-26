@@ -2,10 +2,37 @@ spring:
   application:
     name: qr-service
 
-server:
-  port: ${SERVER.PORT}
-  ssl:
-    key-store: ${SSL.KEY.STORE}
-    key-store-password: ${SSL.KEY.STORE.PASSWORD}
-    key-store-type: ${SSL.KEY.STORE.TYPE}
-    key-alias: ${SSL.KEY.ALIAS}
+  profiles:
+    active: ${ENVIRONMENT:dev}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: ${ENVIRONMENT.DEV}
+  server:
+    port: 8081
+msg: DEV
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: ${ENVIRONMENT.UAT}
+msg: UAT
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: ${ENVIRONMENT.PROD}
+  server:
+    ssl:
+      key-store: ${SSL.KEY.STORE}
+      key-store-password: ${SSL.KEY.STORE.PASSWORD}
+      key-store-type: ${SSL.KEY.STORE.TYPE}
+      key-alias: ${SSL.KEY.ALIAS}
+msg: PROD
